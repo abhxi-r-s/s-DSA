@@ -251,7 +251,7 @@ void search(int a)
     {
         if(temp->data==a)
         {
-            printf("\n Element %d found at position %d.\n",a,pos);
+            printf("\n Element %d found at position %d.\n",a,pos+1);
             found=1;
             break;
         }
