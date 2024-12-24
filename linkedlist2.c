@@ -1,6 +1,17 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+void insert_beg(int num);
+void insert_end(int num);
+void insert_pos(int num);
+void delete_beg();
+void delete_end();
+void delete_pos(int pos);
+void display();
+void search(int a);
+void insert();
+void delete();
+
 struct node{
     int data;
     struct node *next;
@@ -11,7 +22,7 @@ int count=0;
 
 void insert()
 {
-    int ch,num,pos;
+    int ch,num;
     printf("\nEnter the value to insert :");
     scanf("%d",&num);
     printf("\nINSERTION\n1.Insert at beginning\n2.Insert at End\n3.Insert at preffered position\n");
@@ -24,18 +35,7 @@ void insert()
         break;
         case 2:insert_end(num);
         break;
-        case 3:
-        printf("\nEnter the position to insert :");
-        scanf("%d",&pos);
-        if(pos>count||pos<=0)
-        {
-            printf("\nEnter a valid position to insert :");
-            scanf("%d",&pos);
-        }
-        else
-        {
-            insert_pos(num,pos);
-        }
+        case 3:insert_pos(num);        
         break;
         default:
         printf("\nEnter a valid option :");
@@ -80,9 +80,9 @@ void insert_end(int num)
         count++;
         printf("\n Element inserted Successfully...!");
     }
-    else if(head!=0)
+    else
     {
-        while(temp->next==NULL)
+        while(temp->next!=NULL)
         {
             temp=temp->next;
         }
@@ -93,34 +93,36 @@ void insert_end(int num)
 
 
 }
-void insert_pos(int num,int pos)
+void insert_pos(int num)
 {
     struct node *newnode=(struct node*)malloc(sizeof(struct node));
     newnode->data=num;
     newnode->next=NULL;
     temp=head;
-
+    int pos;
     printf("\nEnter the position to insert :");
     scanf("%d",&pos);
-    if(pos==1)
+    if( pos<=0 || pos>count)
     {
-        insert_beg(num);
+        printf("invalid position");
+        
     }
-    else if(pos==count)
+    else if(pos==1||head==0)
     {
-        insert_end(num);
+            insert_beg(num);
     }
     else
     {
-    for(int i=0;i<=pos-2;i++)
-    {
-        temp=temp->next;        
+       for(int i=0;i<pos-2;i++)
+       {
+            temp=temp->next;        
+        }
+        newnode->next=temp->next;
+        temp->next=newnode;
+        count++;
+        printf("\n Element inserted Successfully...!");
     }
-    newnode->next=temp->next;
-    temp->next=newnode;
-    count++;
-    printf("\n Element inserted Successfully...!");
-    }
+    
 
 }
 
@@ -141,22 +143,30 @@ void delete()
         case 3:
         if(head==0)
         {
-            printf("\n No elemt to delete ");
+            printf("\n No element to delete ");
         }
         else
         {
         printf("\nEnter the position to delete :");
         scanf("%d",&pos);
-        if(pos>count||pos<0)
+        if(pos>count||pos<=0)
         {
-            printf("Enter a valid position to delete :");
-            scanf("%d",&pos);
+            printf("Position is invalid");
+            
+            
+        }
+        else if(pos==1)
+        {
+            delete_beg();
         }
         else
         {
             delete_pos(pos);
         }
         }
+        break;
+        default:
+        printf("\n Enter a valid choice :\n");
     }
 }
 
@@ -166,12 +176,18 @@ void delete_beg()
     {
         printf("\nNothing to delete");
     }
+    else if(head->next==NULL)
+    {
+        free(head);
+        head=0;
+    }
     else
     {
     temp=head;
     head=head->next;
     
     printf("The deleted element is %d",temp->data);
+    free(temp);
     count--;
     printf("\n Element deleted Successfully...!");
     }
@@ -184,9 +200,19 @@ void delete_end()
         {
             printf("\n No element to delete ");
         }
+    else if(head->next==NULL)
+    {
+        free(head);
+        head=0;
+        printf("The deleted element is %d",del->data);
+            count--;
+            
+            printf("\n Element deleted Successfully...!");
+        
+    }
     else
         {
-            while(temp->next!=NULL)
+            while(temp->next->next!=NULL)
                 {
                     temp=temp->next;
                 }
@@ -194,13 +220,15 @@ void delete_end()
             temp->next=NULL;
             printf("The deleted element is %d",del->data);
             count--;
+            free(del);
             printf("\n Element deleted Successfully...!");
         }
     
 }
 void delete_pos(int pos)
 {
-    for(int i=0;i<=pos-2;i++)
+    temp=head;
+    for(int i=0;i<pos-2;i++)
     {
         temp=temp->next;
     }
@@ -208,39 +236,43 @@ void delete_pos(int pos)
     temp->next=del->next;
     count--;
     printf("The Deleted element is  %d",del->data);
+    free(del);
     printf("\n Element deleted Successfully...!");
+    
    
 
 
 }
 void search(int a)
 {
+    int pos=0,found=0;
     temp=head;
-    
-        while(temp->next==NULL)
+    while(temp!=NULL)
+    {
+        if(temp->data==a)
         {
-            if(temp->data==a)
-            {
-                printf("Element found");
-            }
-            else
-            {
-                printf("Element is present ");
-            }
+            printf("\n Element %d found at position %d.\n",a,pos);
+            found=1;
+            break;
         }
-    
+        temp=temp->next;
+        pos++;
+    }
+    if(!found){
+        printf("\n Element %d not found in the list.\n",a);
+    }
 
 }
 void display()
 {
     temp=head;
-    if(temp==0)
+    if(head==0)
     {
         printf("\nNo elements in the list :");
     }
     else
     {
-        for(int i=1;i<=count;i++)
+        while(temp!=NULL)
         {
         printf("\n%d\n",temp->data);
         temp=temp->next;
