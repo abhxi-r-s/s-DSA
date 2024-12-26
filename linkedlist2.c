@@ -102,7 +102,7 @@ void insert_pos(int num)
     int pos;
     printf("\nEnter the position to insert :");
     scanf("%d",&pos);
-    if( pos<=0 || pos>count)
+    if( pos<=0 || pos>count+1)
     {
         printf("invalid position");
         
