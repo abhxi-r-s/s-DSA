@@ -44,7 +44,7 @@ struct node *search(struct node *root, int value) {
 
 struct node *minValue(struct node *root) {
     struct node *current = root;
-    while (current && current->Left != NULL) {
+    while (current->Left != NULL) {
         current = current->Left;
     }
     return current;

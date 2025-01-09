@@ -1,6 +1,6 @@
 #include <stdio.h>
 int n, i, j, adj[20][20], start, visited[20], queue[10], front = -1, rear = -1;
-void bfs();
+void bfs(int data);
 void enqueue(int node);
 int dequeue();
 int main()
