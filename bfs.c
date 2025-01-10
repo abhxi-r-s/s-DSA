@@ -1,62 +1,60 @@
 #include<stdio.h>
-int n,v[20],A[20][20],queue[20],source,front=-1,rear=-1;
-int bfs(int node);
-void enqueue(int node);
+
+int n,A[20][20],V[20],source,front=-1,rear=-1,queue[20];
+
+void bfs(int start);
 int dequeue();
+void enqueue(int node);
 
 void main()
 {
     printf("Enter the number of nodes :");
     scanf("%d",&n);
 
-    printf("Enter the adjacency matrix :");
+    printf("Enter the Adjacency Matrix :");
     for(int i=0;i<n;i++)
-    {   v[i]=0;
+    {   V[i]=0;
         for(int j=0;j<n;j++)
         {
             scanf("%d",&A[i][j]);
         }
     }
-    printf("Enter the source node");
+    printf("Enter the source node :");
     scanf("%d",&source);
 
     bfs(source);
 }
-int bfs(int node)
+void bfs(int start)
 {
-    printf("%d",node);
-    v[node]=1;
-    enqueue(node);
+    printf("%d\t",start);
+    V[start]=1;
+    enqueue(start);
 
     while(front!=-1)
     {
-        node=dequeue();
+        int node=dequeue();
         for(int i=0;i<n;i++)
         {
-            if(A[node][i]==1 && v[i]!=1)
+            if(A[node][i]!=0 && V[i]!=1)
             {
-                v[i]=1;
-                printf("%d",i);
+                printf("%d\t",i);
                 enqueue(i);
+                V[i]=1;
             }
         }
-
     }
-
 }
 void enqueue(int node)
 {
     if(front==-1)
     {
-        front=0;
-        rear=0;
+        front=0;rear=0;
+
     }
-    else
-    {
+    else{
         rear++;
     }
     queue[rear]=node;
-
 }
 int dequeue()
 {
@@ -66,7 +64,8 @@ int dequeue()
         front=-1;
         rear=-1;
     }
-    else{
+    else
+    {
         front++;
     }
     return node;
