@@ -1,76 +1,72 @@
-#include <stdio.h>
-int n, i, j, adj[20][20], start, visited[20], queue[10], front = -1, rear = -1;
-void bfs(int data);
+#include<stdio.h>
+int n,v[20],A[20][20],queue[20],source,front=-1,rear=-1;
+int bfs(int node);
 void enqueue(int node);
 int dequeue();
-int main()
+
+void main()
 {
-    printf("\nEnter the no: of nodes:");
-    scanf("%d", &n);
-    // Reading the graph from adjacency matrix
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
+    printf("Enter the number of nodes :");
+    scanf("%d",&n);
+
+    printf("Enter the adjacency matrix :");
+    for(int i=0;i<n;i++)
+    {   v[i]=0;
+        for(int j=0;j<n;j++)
         {
-            printf("\nEnter A[%d][%d]:", i, j);
-            scanf("%d", &adj[i][j]);
+            scanf("%d",&A[i][j]);
         }
     }
-    printf("\nEnter the starting vertex:");
-    scanf("%d", &start);
-    if (start < 0 || start > n - 1)
-    {
-        printf("\nInvalid Entry!!");
-    }
-    else
-    {
-        printf("DFS visisted order\n");
-        bfs(start);
-    }
-    return 0;
+    printf("Enter the source node");
+    scanf("%d",&source);
+
+    bfs(source);
 }
-void bfs(int start)
+int bfs(int node)
 {
-    enqueue(start);
-    visited[start] = 1;
-    printf("%d\t", start);
-    while (front != -1 && rear != -1)
+    printf("%d",node);
+    v[node]=1;
+    enqueue(node);
+
+    while(front!=-1)
     {
-        int node = dequeue();
-        for (int i = 0; i < n; i++)
+        node=dequeue();
+        for(int i=0;i<n;i++)
         {
-            if (adj[i][node] == 1 && visited[i] != 1)
+            if(A[node][i]==1 && v[i]!=1)
             {
-                visited[i] = 1;
-                printf("%d\t", i);
+                v[i]=1;
+                printf("%d",i);
                 enqueue(i);
             }
         }
+
     }
+
 }
 void enqueue(int node)
 {
-    if (front == -1 && rear == -1)
+    if(front==-1)
     {
-        front = 0;
-        rear = 0;
+        front=0;
+        rear=0;
     }
     else
     {
         rear++;
     }
-    queue[rear] = node;
+    queue[rear]=node;
+
 }
 int dequeue()
 {
-    int node = queue[front];
-    if (front == rear)
+    int node=queue[front];
+    if(front==rear)
     {
-        front = -1;
-        rear = -1;
+        front=-1;
+        rear=-1;
     }
-    else
-    {
+    else{
         front++;
     }
     return node;
