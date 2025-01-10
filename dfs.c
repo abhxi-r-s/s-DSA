@@ -1,36 +1,45 @@
-#include<stdio.h>
-int adj[20][20],visited[20],n;
-void dfs(int val);
-void main()
-{
-    int start;
 
-    printf("Enter the number of vertices :");
+#include<stdio.h>
+int V[20],A[20][20];
+int n,source;
+void dfs(int node);
+void main()
+{   
+    printf("Enter the number of nodes :");
     scanf("%d",&n);
+
     printf("Enter the adjacency matrix :");
     for(int i=0;i<n;i++)
-    {visited[i]=0;
+    {   V[i]==0;
         for(int j=0;j<n;j++)
         {
-            scanf("%d",&adj[i][j]);
+            scanf("%d",&A[i][j]);
         }
     }
-printf("Enter the starting node :");
-scanf("%d",&start);
-printf("DFS");
-dfs(start);
+    
+    printf("Enter the source node :");
+    scanf("%d",&source);
+    if(source<0 || source>=n)
+    {
+        printf("Invalid entry");
+
+    }
+    else{
+        printf("DFS");
+        dfs(source);
+    }
 }
+    
 void dfs(int node)
 {
-    visited[node]=1;
+    V[node]=1;
     printf("%d",node);
+
     for(int i=0;i<n;i++)
     {
-        if(adj[node][i]==1 && visited[i]!=1)
+        if(V[i]==0 && A[node][i]!=0)
         {
             dfs(i);
         }
     }
-
-
 }
