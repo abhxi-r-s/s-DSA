@@ -1,27 +1,27 @@
 #include<stdio.h>
-
 void main()
-{
-    int n,c,adj[20][20],v[100];
-    printf("Enter the number of vertices :");
+{ int n,a[20][20],v[20];
+    printf("Enter the number of nodes :");
     scanf("%d",&n);
-    printf("Enter the adjacency matrix");
-    for(int i=0;i<n;i++)
-    { v[i]=0;
-        for(int j=0;j<n;j++)
-        {
-            scanf("%d",&adj[i][j]);
 
-        }
-    }
-    printf("Topological sorting:");
+    printf("Enter the adjacency matrix :");
     for(int i=0;i<n;i++)
     {
-        if(v[i]==0)
-        { c=0;
+        v[i]=0;
+        for(int j=0;j<n;j++)
+        {
+            scanf("%d",&a[i][j]);
+        }
+    }
+    printf("Topological Sort \n");
+    for(int i=0;i<n;i++)
+    {
+        int c=0;
+        if(v[i]!=1)
+        {
             for(int j=0;j<n;j++)
             {
-                if(adj[i][j]!=0)
+                if(a[i][j]!=0)
                 {
                     c=1;
                     break;
@@ -29,16 +29,14 @@ void main()
             }
             if(c==0)
             {
-                v[i]=1;
-                printf("%d",i);
-                for(int j=0;j<n;j++)
-                {
-                    adj[i][j]=0;
-                    
-                }
-                i=-1;
+                    v[i]=1;
+                    printf("%d",i);
+                    for(int j=0;j<n;j++)
+                    a[i][j]=0;
+                    i=-1;
+                
             }
-            
         }
+
     }
 }
