@@ -32,7 +32,7 @@ void main()
             {
                 for(int j=0;j<n;j++)
                 {
-                    if(a[i][j]<min && V[i]==0)
+                    if(a[i][j]<min && V[j]==0)
                     {
                         min=a[i][j];
                         u=j;
