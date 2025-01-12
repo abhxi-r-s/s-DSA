@@ -7,49 +7,44 @@ void main()
 
     printf("Enter the adjacency matrix :");
     for(int i=0;i<n;i++)
-    {
-        V[i]=0;
+    { V[i]=0;
         for(int j=0;j<n;j++)
         {
             scanf("%d",&a[i][j]);
-            if(a[i][j]==0)
-            {
-                a[i][j]=999;
-            }
             if(a[i][j]<min)
             {
                 min=a[i][j];
                 u=i;
                 v=j;
             }
+            
         }
     }
     cost+=min;
     V[u]=1;
     V[v]=1;
-    printf("{%d,%d}=%d",u,v,min);
+    printf("%d-%d=%d",u,v,min);
     while(e<n-1)
-    { min=999;
+    {min=999;
         for(int i=0;i<n;i++)
         {
-            if(V[i]==1)
+            if(V[i]!=1)
             {
                 for(int j=0;j<n;j++)
                 {
                     if(a[i][j]<min && V[j]==0)
                     {
                         min=a[i][j];
-                        u=i;
-                        v=j;
+                        u=j;
+
                     }
                 }
             }
         }
+        printf("%d-%d=%d",u,v,min);
         cost+=min;
-        
-        V[v]=1;
-        printf("{%d,%d}=%d",u,v,min);
+        V[u]=1;
         e++;
     }
-    printf("Cost is %d",cost);
+    prinf("%d is the cost",cost);
 }
